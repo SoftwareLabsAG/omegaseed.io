@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OmegaSeedphrase — loading aid for 24 × 4 titanium tiles</title>
+<meta name="description" content="Companion loading aid for the OmegaSeedphrase: shows step by step which tile belongs in which slot. Does not generate a seed phrase. Runs locally in your browser, offline too.">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="../assets/img/omega-icon.png">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="alternate" hreflang="de" href="https://omegaseed.io/index.html">
+<link rel="alternate" hreflang="en" href="https://omegaseed.io/en/index.html">
+<link rel="alternate" hreflang="x-default" href="https://omegaseed.io/index.html">
+</head>
+<body>
+
+<!-- ============ 1. Cookie and local storage notice ============ -->
+<div class="overlay" id="ovCookie" role="dialog" aria-modal="true" aria-labelledby="ckT">
+  <div class="sheet">
+    <h2 id="ckT">Cookies and local storage</h2>
+    <p class="lead">Briefly and completely: this website sets <b>no cookies</b>, embeds
+      <b>no external services</b> and performs <b>no analytics or reach measurement</b>.</p>
+    <ul>
+      <li>Fonts, images and program code are served from the same server — no data is transferred
+        to third parties.</li>
+      <li>Everything you type stays in your browser. Nothing is uploaded and nothing is stored.</li>
+      <li>We would merely like to place <b>a single entry</b> in your browser's local storage: the
+        note that you have seen this message. Otherwise it reappears on every visit. This entry
+        contains no personal data.</li>
+    </ul>
+    <div class="actions">
+      <button class="btn primary" onclick="ckAccept()">Agreed — remember this</button>
+      <button class="btn" onclick="ckDecline()">Store nothing</button>
+    </div>
+    <p class="fine">Without storage the site works exactly the same; this notice will simply appear
+      again next time. Details in the <a href="privacy.html">privacy policy</a>.</p>
+  </div>
+</div>
+
+<!-- ============ 2. Clarification of what the tool is for ============ -->
+<div class="overlay" id="ovPurpose" role="dialog" aria-modal="true" aria-labelledby="puT">
+  <div class="sheet">
+    <div class="badge-strong">Please read once</div>
+    <h2 id="puT">This tool does not generate a seed phrase</h2>
+    <p class="lead">It is a <b>loading aid</b>. It shows you which tile belongs in which slot of the
+      plate — nothing more.</p>
+    <ul>
+      <li><b>No generation.</b> Your seed phrase is created in your hardware wallet or your wallet
+        software. This page creates no wallet, no keys and no backup you should use. The random
+        words in the tool are for practice only.</li>
+      <li><b>No custody, no transmission.</b> There is no server that receives anything. All
+        calculations run in your browser.</li>
+      <li><b>No recovery.</b> If your seed phrase is lost, it cannot be reconstructed with this
+        page.</li>
+      <li><b>Real data belongs on a separate computer.</b> For real use, download the offline
+        version and run it on a device with no network connection.</li>
+      <li><b>No advice.</b> The content is general information, not financial, legal or tax
+        advice.</li>
+    </ul>
+    <label class="ack">
+      <input type="checkbox" id="ackBox" onchange="puToggle()">
+      <span>I understand that this tool <b>does not generate a seed phrase</b> and only helps with
+        loading the plate. I have taken note of the
+        <a href="terms.html" target="_blank" rel="noopener">terms of use</a>.</span>
+    </label>
+    <div class="actions">
+      <button class="btn primary" id="puBtn" disabled onclick="puAccept()">Understood — to the tool</button>
+      <a class="btn" href="terms.html">Read the terms of use</a>
+    </div>
+  </div>
+</div>
+
+
+<header>
+  <div class="wrap hbar">
+    <div class="brand">
+      <img src="../assets/img/omega-wordmark.png" alt="Omega">
+      <span class="div"></span>
+      <span class="pn"><b>OmegaSeedphrase</b><span class="pnsub"> · Loading</span></span>
+    </div>
+    <nav class="main">
+      <a href="#basics">Basics</a>
+      <a href="#encoding">Encoding</a>
+      <a href="#tool">Tool</a>
+      <a href="#wizard">Guide</a>
+      <a href="#inventory">Tiles</a>
+      <a href="#checklist">Checklist</a>
+      <a href="#offline">Offline</a>
+    </nav>
+    <button class="themeBtn" onclick="toggleTheme()" title="Light / dark" aria-label="Switch appearance">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <a class="langSw" href="../index.html" hreflang="de" title="Deutsche Fassung">DE</a>
+    <a class="vpill" href="changelog.html" title="Changelog">v1.3.0</a>
+  </div>
+</header>
+
+<div class="wrap hero">
+  <div class="heroGrid">
+    <div>
+      <div class="badge"><span class="dot"></span> Offline · No upload · Client-side</div>
+      <h1>24 slots. 4 tiles.<br>96 characters of safety.</h1>
+      <p class="lead">The <b>OmegaSeedphrase</b> is a metal plate for storing your seed phrase permanently.
+        This page shows you step by step how to load it — either as a Base24 code following the
+        <b>OMDP39</b> standard, or with classic <b>BIP39 word indices</b>.</p>
+    </div>
+    <div class="card" style="padding:16px">
+      <div class="plateHead">
+        <h4>Preview · Front</h4>
+        <span class="sideTag">Slots 01–12</span>
+      </div>
+      <div id="heroPlate"></div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== BASICS =================== -->
+<section id="basics" class="alt">
+  <div class="wrap">
+    <div class="kicker">01 — Basics</div>
+    <h2>What you have in front of you</h2>
+    <p class="mut" style="max-width:74ch">The OmegaSeedphrase is a three-part stack: a stainless steel body with
+      channels milled into both faces, two titanium frames as lids, and loose titanium tiles each engraved with a
+      single character. Every channel is 26.8 mm long — exactly four tiles of 6.7 mm.</p>
+
+    <div class="grid3" style="margin-top:24px">
+      <div class="card">
+        <h3><span class="num">1</span> Body</h3>
+        <p class="small mut">Stainless steel, blank 80 × 62 × 8 mm. Twelve channels on each face, 26.8 mm of usable
+          length and 4.2 mm deep. Held by 4 × M2 × 0.4 in the corners plus one central screw.</p>
+        <p class="tiny mono mut" style="margin:0">Channel depth 4.2 mm → 0.5 mm tile + 1 mm frame</p>
+      </div>
+      <div class="card">
+        <h3><span class="num">2</span> Frames</h3>
+        <p class="small mut">Titanium, 1 mm. The <b>upper frame</b> carries the engraved slot numbers
+          <b>1–12</b>, the <b>lower frame</b> the numbers <b>13–24</b>. At 25 × 5.85 mm the window is
+          deliberately smaller than a tile — which is why the tiles cannot fall out.</p>
+      </div>
+      <div class="card">
+        <h3><span class="num">3</span> Tiles</h3>
+        <p class="small mut">Titanium, 7.8 × 6.7 × 0.5 mm, R1.2 corners, engraved on one side. A full set for one
+          seed needs <b>96 tiles</b>.</p>
+      </div>
+    </div>
+
+    <div class="note warn" style="margin-top:20px">
+      <b>Orientation.</b> <u>Always</u> go by the engraved slot numbers in the frame, never by how
+      the plate sits in your hand. When you flip it to load the back, slot 13 does not end up where
+      slot 1 was. Read the number, then place the tile.
+    </div>
+  </div>
+</section>
+
+<!-- =================== ENCODING =================== -->
+<section id="encoding">
+  <div class="wrap">
+    <div class="kicker">02 — Encoding</div>
+    <h2>Two ways to get 24 words down to 4 characters each</h2>
+    <div class="grid2" style="margin-top:22px">
+      <div class="card">
+        <h3 style="color:var(--red)">A · OMDP39 — Base24 / tetravigesimal</h3>
+        <p class="small">The authoritative source for this standard is the publication at
+          <a href="https://www.omdp39.io" target="_blank" rel="noopener noreferrer">www.omdp39.io</a>.
+          An OMDP39 share consists of 33 BIP39 words and converts losslessly into a
+          <b>96-character Base24 string</b>. 96 = 24 slots × 4 tiles — the code fits a plate
+          exactly.</p>
+        <p class="small mut" style="margin-bottom:9px">Character set of the tiles (24 characters):</p>
+        <div class="alpha" id="alphaBox"></div>
+        <p class="tiny mut" style="margin-top:12px">Not included: <b>I, L, O</b> — on metal they are easily confused with 1, 1 and 0.
+          The <b class="mono">R</b> is marked in amber because it denotes <b>the same character as
+          Q</b> (see below). Each character carries log₂(24) ≈ 4.585 bits → 96 characters ≈ 440 bits.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--ink)">B · BIP39 — word index, 4 digits</h3>
+        <p class="small">The classic route: 24 BIP39 words. Instead of the word you store its <b>position in the
+          BIP39 word list</b> (1–2048), zero-padded to four digits. That way you only need digit
+          tiles.</p>
+        <div class="tblWrap" style="margin-top:14px">
+          <table>
+            <thead><tr><th>Word</th><th class="m">Index</th><th class="m">Slot content</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">abandon</td><td class="m">1</td><td class="m" style="color:var(--red);font-weight:600">0001</td></tr>
+              <tr><td class="mono">legal</td><td class="m">1020</td><td class="m" style="color:var(--red);font-weight:600">1020</td></tr>
+              <tr><td class="mono">zoo</td><td class="m">2048</td><td class="m" style="color:var(--red);font-weight:600">2048</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny mut" style="margin-top:12px">The tool also supports the <b>four-letter short form</b> (BIP39 words are unique in
+          their first four letters) — but that needs the full Latin alphabet, including I, L, O and
+          a <b>real R</b>. The tile set does not contain those.</p>
+      </div>
+    </div>
+
+    <div class="note warn" style="margin-top:18px">
+      <b><span class="mono">R</span> and <span class="mono">Q</span> are the same character.</b>
+      OMDP39 writes an <b class="mono">R</b> in the 24th position of the alphabet
+      (<span class="mono">0123456789ABCDEFGHJKMNP<b>R</b></span>), the tiles carry a <b class="mono">Q</b> there (<span class="mono">0123456789ABCDEFGHJKMNP<b>Q</b></span>). Both stand for the same value <b>23</b> — two notations for one alphabet, not two
+      different encodings.
+      <div class="row" style="gap:0;margin:12px 0 4px;align-items:center">
+        <span class="gc" style="width:34px;height:34px;font-size:15px">R</span>
+        <span class="mono" style="padding:0 12px;color:var(--ink-40)">≡</span>
+        <span class="gc" style="width:34px;height:34px;font-size:15px">Q</span>
+        <span class="small mut" style="padding-left:14px">OMDP39 output ⟶ tile on the plate</span>
+      </div>
+      The tool accepts both notations: paste a code containing <span class="mono">R</span> and it
+      is mapped to <span class="mono">Q</span> for loading, with the conversion shown to you. Reading
+      back works the other way round: a <span class="mono">Q</span> on the plate is an
+      <span class="mono">R</span> in the OMDP39 tool.
+    </div>
+
+    <div class="note" style="margin-top:14px">
+      <b>You cannot mix the two.</b> One plate carries exactly one encoding. Mark on the housing
+      (engraved or stamped) which method you used — otherwise recovery becomes guesswork.
+    </div>
+  </div>
+</section>
+
+<!-- =================== TOOL =================== -->
+<section id="tool" class="alt">
+  <div class="wrap">
+    <div class="kicker">03 — Input</div>
+    <h2>Preparing your data</h2>
+    <div class="note" style="margin:16px 0 22px">
+      <b>Security note.</b> Everything on this page runs locally in your browser — no upload, no
+      tracking, no storage. Even so: only enter a <u>real</u> seed phrase on an air-gapped machine.
+      The demo mode is there for practice.
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tabA" aria-selected="true" onclick="setMode('base24')">
+        A · OMDP39 Base24 <span class="t2">96 characters · tetravigesimal</span></button>
+      <button class="tab" role="tab" id="tabB" aria-selected="false" onclick="setMode('bip39')">
+        B · BIP39 word index <span class="t2">24 words → 24 × 4 digits</span></button>
+    </div>
+
+    <div id="panelA" class="card" style="margin-top:18px">
+      <label class="fl" for="b24">Base24 code (96 characters · spaces and line breaks are ignored)</label>
+      <textarea id="b24" rows="4" spellcheck="false" autocomplete="off"
+        placeholder="e.g. 7K3F 9AB2 0Q4M … (24 groups of 4) — R is taken as Q"></textarea>
+      <div class="status" id="b24status"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn" onclick="fillDemoB24()">Insert demo code</button>
+        <button class="btn" onclick="formatB24()">Format into groups of four</button>
+        <button class="btn" onclick="clearAll()">Clear</button>
+      </div>
+
+      <hr style="border:0;border-top:1px solid var(--line);margin:22px 0">
+
+      <h3 style="font-size:15px;margin-bottom:4px">Calculate from 33 words</h3>
+      <p class="small mut" style="margin-bottom:14px">
+        Word position <span class="mono">1–2048</span> → <b>+1000</b> → <span class="mono">1001–3048</span>
+        → concatenated into <b>132 digits</b> → read as a number in <b>base 24</b> → <b>96 characters</b>.
+      </p>
+      <textarea id="w33" rows="3" spellcheck="false" autocomplete="off"
+        placeholder="33 BIP39 words, separated by spaces"></textarea>
+      <div class="status" id="w33status"></div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn primary" onclick="gen33()">Generate 33 random words</button>
+        <button class="btn" onclick="convert33()">Convert</button>
+        <button class="btn" id="w33take" onclick="take33()" disabled>Use as code ↓</button>
+      </div>
+      <div id="w33out" style="display:none;margin-top:16px"></div>
+    </div>
+
+    <div id="panelB" class="card" style="margin-top:18px;display:none">
+      <div class="row" style="justify-content:space-between;margin-bottom:16px">
+        <div class="seg">
+          <button id="fmtIdx" aria-pressed="true" onclick="setBipFormat('index')">Index 0001–2048</button>
+          <button id="fmtLtr" aria-pressed="false" onclick="setBipFormat('letters')">First 4 letters</button>
+        </div>
+        <div class="row">
+          <button class="btn sm" onclick="fillDemoBip()">Demo seed (public test vector)</button>
+          <button class="btn sm" onclick="clearAll()">Clear</button>
+        </div>
+      </div>
+      <label class="fl">24 BIP39 words (English word list)</label>
+      <textarea id="bipBulk" rows="3" spellcheck="false" autocomplete="off"
+        placeholder="Paste words here — they are distributed into the fields below"></textarea>
+      <div class="wordGrid" id="wordGrid" style="margin-top:14px"></div>
+      <div class="status" id="bipstatus"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== WIZARD =================== -->
+<section id="wizard">
+  <div class="wrap">
+    <div class="kicker">04 — Guide</div>
+    <h2>Loading, step by step</h2>
+    <div class="steps noprint" id="stepBar"></div>
+    <div class="progress"><i id="progBar"></i></div>
+
+    <div class="stage">
+      <div id="stageBody"></div>
+      <div class="plateWrap">
+        <div class="plateHead">
+          <h4 id="plateTitle">Plate</h4>
+          <span class="sideTag" id="sideTag">Slots 01–12</span>
+        </div>
+        <div id="mainPlate"></div>
+        <div class="legend" id="plateLegend"></div>
+        <p class="tiny mut" style="margin:12px 0 0" id="plateHint"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== TILE INVENTORY =================== -->
+<section id="inventory" class="alt">
+  <div class="wrap">
+    <div class="kicker">05 — Tiles</div>
+    <h2>Parts list for this seed</h2>
+    <p class="mut small" style="max-width:70ch">Sort the tiles by character before loading. It is by far the biggest time saver — and the
+      most common source of error when skipped.</p>
+    <div class="card" style="margin-top:16px">
+      <div class="inv" id="invBox"></div>
+      <div class="row" style="margin-top:16px">
+        <span class="pill" id="invTotal">0 / 96 tiles</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== CHECKLIST =================== -->
+<section id="checklist">
+  <div class="wrap">
+    <div class="row" style="justify-content:space-between;align-items:end">
+      <div>
+        <div class="kicker">06 — Control</div>
+        <h2>Checklist to tick off</h2>
+      </div>
+      <div class="row noprint">
+        <span class="pill" id="chkCount">0 / 24 checked</span>
+        <button class="btn" onclick="resetChecklist()">Reset ticks</button>
+        <button class="btn" onclick="window.print()">Print / save as PDF</button>
+      </div>
+    </div>
+    <div class="note" id="chkDone" style="display:none;margin-top:16px;border-color:var(--ok);background:var(--ok-bg)">
+      <b style="color:var(--ok)">All 24 slots checked.</b> The plate has been proofread. Now the
+      restore test in your wallet — only then does the backup count as valid.
+    </div>
+    <div class="note warn" style="margin:16px 0">
+      <b>Printouts are plaintext copies of your seed.</b> Local printer only, never over a network
+      or the cloud — and destroy them after checking.
+    </div>
+    <div class="grid2" style="margin-top:8px">
+      <div class="tblWrap">
+        <table>
+          <thead><tr><th class="m">Slot</th><th>Source</th><th>Characters</th><th class="chk noprint">✓</th></tr></thead>
+          <tbody id="chkA"></tbody>
+        </table>
+      </div>
+      <div class="tblWrap">
+        <table>
+          <thead><tr><th class="m">Slot</th><th>Source</th><th>Characters</th><th class="chk noprint">✓</th></tr></thead>
+          <tbody id="chkB"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="offline" class="alt">
+  <div class="wrap">
+    <div class="kicker">07 — Offline</div>
+    <h2>Using it air-gapped</h2>
+    <p class="mut" style="max-width:72ch">For real seed phrases this tool belongs on a computer with
+      no network connection. The offline version is a single HTML file that brings everything with
+      it — fonts, word list, program code. It loads nothing and works in flight mode exactly as it
+      does online.</p>
+
+    <div class="grid2" style="margin-top:22px">
+      <div class="card">
+        <h3><span class="num">1</span> Download and verify</h3>
+        <p class="small mut">Download the file on a computer you trust and compare the checksum
+          before transferring it to the air-gapped machine.</p>
+        <div class="row" style="margin:14px 0">
+          <a class="btn primary" href="../download/omegaseedphrase-offline-en.html"
+             download="omegaseedphrase-offline-en-v1.2.0.html">
+            Download the offline version</a>
+          <a class="btn" href="../SHA256SUMS.txt">SHA256SUMS.txt</a>
+        </div>
+        <p class="small mut" style="margin-bottom:6px">Checksum (SHA-256):</p>
+        <div class="chainBox" id="offlineHash">5b198e2cf7d8b59c4c0867327d805627ddd84bb99649e7365c1f4f2f6253666a</div>
+        <p class="tiny mut" style="margin-top:10px">Verify with
+          <span class="mono">sha256sum omegaseedphrase-offline-en.html</span> (Linux),
+          <span class="mono">shasum -a 256 …</span> (macOS) or
+          <span class="mono">certutil -hashfile … SHA256</span> (Windows).</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="num">2</span> Open it on the air-gapped machine</h3>
+        <ol class="small mut" style="padding-left:18px">
+          <li>Transfer the file on a USB stick, compare the checksum again there.</li>
+          <li>Disconnect the network: Wi-Fi off, cable out, Bluetooth off.</li>
+          <li>Open the file in a browser with a double click — no server is needed.</li>
+          <li>Afterwards: close the browser, clear history and temporary files; better still, use a
+            system that stores nothing permanently anyway.</li>
+        </ol>
+        <div class="note warn" style="margin-top:14px">
+          <b>A computer that has ever been online is not an air-gapped computer.</b> If you are
+          serious about it, boot a fresh live system with no disk access.
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:22px">
+      <h3><span class="num">3</span> Verify the signature</h3>
+      <p class="small mut">The checksum above sits on the same page as the file above it. Whoever
+        takes over this server changes both — and the comparison still passes. That is why every
+        release is additionally signed, with keys that are <b>not created on this server</b>.</p>
+
+      <p class="small mut" style="margin-bottom:6px">Two schemes over the same files:</p>
+      <ul class="small mut" style="padding-left:18px;margin-top:0">
+        <li><b>Ed25519</b> — <span class="mono">.minisig</span>, verifiable with
+          <a href="https://jedisct1.github.io/minisign/" target="_blank" rel="noopener noreferrer">minisign</a></li>
+        <li><b>ML-DSA-65</b> (FIPS 204, post-quantum) — <span class="mono">.mldsa</span>,
+          verifiable with OpenSSL 3.5 or newer</li>
+      </ul>
+      <p class="small mut">Ed25519 is fast and widely verifiable today. ML-DSA still holds once
+        Ed25519 no longer withstands a quantum computer — and a seed phrase backup is meant to last
+        decades. A forgery would have to pass both.</p>
+
+      <div class="row" style="margin:14px 0">
+        <a class="btn primary" href="https://github.com/SoftwareLabsAG/omegaseed.io/releases"
+           target="_blank" rel="noopener noreferrer">Releases and signatures</a>
+        <a class="btn" href="https://github.com/Omega-Secure/omegaseed-release"
+           target="_blank" rel="noopener noreferrer">Public keys</a>
+        <a class="btn" href="../omegaseed.pub">omegaseed.pub</a>
+        <a class="btn" href="../omegaseed-mldsa.pub">omegaseed-mldsa.pub</a>
+      </div>
+
+      <div class="chainBox cmd">minisign -Vm SHA256SUMS.txt -p omegaseed.pub
+openssl pkeyutl -verify -rawin -in SHA256SUMS.txt \
+    -pubin -inkey omegaseed-mldsa.pub -sigfile SHA256SUMS.txt.mldsa
+sha256sum -c SHA256SUMS.txt</div>
+
+      <div class="note warn" style="margin-top:14px">
+        <b>Get the key from two sources and compare them.</b> Once from this website, once from the
+        key repository. A key that only sits where the file sits secures nothing — which is exactly
+        why the two are published separately.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fcols">
+      <div>
+        <img src="../assets/img/omega-wordmark.png" alt="Omega" style="height:24px;margin-bottom:12px">
+        <p class="tiny" style="max-width:46ch;margin:0">The <b>OmegaSeedphrase</b> is a hardware
+          product made of metal. <b>omegaseed.io</b> is the free companion loading aid for it. All
+          calculations run locally in your browser. No cookies, no tracking, no external resources,
+          no storage of your input.</p>
+      </div>
+      <div>
+        <h5>Tool</h5>
+        <ul>
+          <li><a href="index.html#basics">Basics</a></li>
+          <li><a href="index.html#encoding">Encoding</a></li>
+          <li><a href="index.html#wizard">Guide</a></li>
+          <li><a href="index.html#offline">Offline version</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="legal-notice.html">Legal notice</a></li>
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="terms.html">Terms of use</a></li>
+          <li><a href="changelog.html">Changelog</a></li>
+          <li><a href="index.html#hinweise" onclick="showPurpose(1)">Important notes</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbar">
+      <span>© 2026 D&nbsp;&amp;&nbsp;M Solution Dynamics GmbH</span>
+      <span><a href="changelog.html" class="vpill">v1.3.0</a> · 08.09.2026 ·
+        <a href="../index.html">Deutsch</a></span>
+      <span>No financial, legal or tax advice. Use at your own responsibility.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/bip39-en.js"></script>
+<script src="../assets/app.en.js"></script>
+</body>
+</html>

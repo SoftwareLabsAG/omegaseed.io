@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 # =============================================================================
 #  Klassische Signatur (Ed25519 via minisign) fuer eine Version.
-#
 #  AUF DEM NETZGETRENNTEN RECHNER AUSFUEHREN.
 #
-#      bash scripts/sign.sh 1.2.0
+#      bash scripts/sign.sh 1.3.0
 #
-#  Erwartet in dist/<VERSION>/ die drei Auslieferungsdateien.
-#  Erzeugt SHA256SUMS.txt und je eine .minisig.
+#  Signiert wird, was in dist/<VERSION>/ liegt - nicht eine feste Liste.
+#  Ein Release muss nicht immer dieselben Dateien enthalten: enthaelt eine
+#  Version keine neue Offline-Datei, wird eben nur das Paket signiert.
 #
-#  Die post-quantum Signatur laeuft getrennt:  python3 scripts/sign-pq.py <VERSION>
+#  Die post-quantum Signatur laeuft getrennt: python3 scripts/sign-pq.py <VERSION>
 # =============================================================================
 set -euo pipefail
 
 VERSION="${1:-}"
-[[ -n "$VERSION" ]] || { echo "Aufruf: bash scripts/sign.sh <VERSION>   z. B. 1.2.0"; exit 1; }
+[[ -n "$VERSION" ]] || { echo "Aufruf: bash scripts/sign.sh <VERSION>   z. B. 1.3.0"; exit 1; }
 
 SECKEY="${MINISIGN_SECKEY:-$HOME/.omega-secure/omegaseed.key}"
 DIR="dist/${VERSION}"
@@ -24,17 +24,16 @@ command -v minisign >/dev/null || {
 [[ -d "$DIR" ]]    || { echo "Verzeichnis $DIR gibt es nicht."; exit 1; }
 [[ -f "$SECKEY" ]] || { echo "Geheimer Schluessel nicht gefunden: $SECKEY"; exit 1; }
 
-FILES=(
-  "omegaseedphrase-deploy-v${VERSION}.zip"
-  "omegaseedphrase-offline-v${VERSION}.html"
-  "omegaseedphrase-offline-en-v${VERSION}.html"
-)
-
 cd "$DIR"
-for f in "${FILES[@]}"; do
-  [[ -f "$f" ]] || { echo "Datei fehlt: $DIR/$f"; exit 1; }
-done
 
+# Alles ausser Signaturen, Pruefsummenliste und Notizen
+mapfile -t FILES < <(ls -1 | grep -Ev '\.(minisig|mldsa)$|^SHA256SUMS\.txt$|^NOTES\.md$' | sort)
+[[ ${#FILES[@]} -gt 0 ]] || { echo "In $DIR liegt nichts zu Signierendes."; exit 1; }
+
+echo "-- Diese Dateien werden erfasst:"
+printf '     %s\n' "${FILES[@]}"
+
+echo
 echo "-- Pruefsummen schreiben"
 {
   echo "# OmegaSeedphrase ${VERSION}"
@@ -48,15 +47,16 @@ else
 fi
 cat SHA256SUMS.txt
 
+# Signiert werden die Pruefsummenliste und jede einzeln herunterladbare HTML-Datei
+SIGN=(SHA256SUMS.txt)
+for f in "${FILES[@]}"; do [[ "$f" == *.html ]] && SIGN+=("$f"); done
+
 echo
 echo "-- Signieren, Passwort wird EINMAL abgefragt"
-# minisign nimmt mehrere -m Dateien in einem Aufruf.
 minisign -S -s "$SECKEY" \
   -c "Omega Secure - OmegaSeedphrase ${VERSION}" \
   -t "OmegaSeedphrase ${VERSION} - Omega Secure, D & M Solution Dynamics GmbH" \
-  -m SHA256SUMS.txt \
-     "omegaseedphrase-offline-v${VERSION}.html" \
-     "omegaseedphrase-offline-en-v${VERSION}.html"
+  -m "${SIGN[@]}"
 
 echo
 echo "-- Gegenprobe"

@@ -74,18 +74,31 @@ Zeichen.** Erst dann ist die Prüfung etwas wert.
 ## Aufbau
 
 ```
-dist/<VERSION>/     die veröffentlichten Dateien mit Signaturen
+site/               die Website, wie sie ausgeliefert wird
+dist/<VERSION>/     die veröffentlichten Pakete mit Signaturen
 scripts/            signieren und prüfen, klassisch und post-quantum
 server/             Selbstaktualisierung des Servers (prüft vor dem Umschalten)
 SIGNATUREN.md       beide Verfahren im Detail
 ```
 
-## Was hier (noch) nicht liegt
+## Zum Quellstand — offen gesagt
 
-Der **Quellcode der Website** ist derzeit nicht enthalten. Solange er fehlt,
-können Sie prüfen, dass eine Datei unverändert von uns stammt — aber nicht
-nachrechnen, dass sie aus einem bestimmten Quellstand entsteht. Der Build ist
-bitgenau reproduzierbar; die Quellen sollen hier nachgereicht werden.
+Unter `site/` liegt die Website vollständig: jede HTML-Datei, das Stylesheet,
+der Programmcode, die Schriften. Was der Browser ausführt, können Sie hier Zeile
+für Zeile nachlesen, und Sie können `site/` gegen das Paket im Release halten —
+beide sind byteweise identisch.
+
+Was **nicht** hier liegt, ist die Erzeugungskette, die diese Dateien einmal aus
+einer gemeinsamen Vorlage gebaut hat: deutsche und englische Fassung, die
+Rechtstexte und die Offline-Einzeldateien wurden daraus in einem Durchgang
+erzeugt. Diese Skripte sind verloren gegangen. Es gibt hier also keinen
+Bauschritt, mit dem sich `site/` aus etwas anderem herleiten ließe — die Dateien
+selbst sind der Stand.
+
+Praktisch heißt das: Sie können prüfen, dass eine Auslieferung unverändert von
+uns stammt, und Sie können den gesamten ausgelieferten Code lesen. Was Sie
+derzeit nicht können, ist einen Build nachrechnen. Das wäre eine Zusage, die
+dieses Verzeichnis nicht einlöst, und deshalb steht sie hier auch nicht.
 
 ---
 

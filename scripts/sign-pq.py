@@ -29,11 +29,10 @@ SECKEY = pathlib.Path.home() / ".omega-secure" / "omegaseed-mldsa.key"
 PUBKEY = pathlib.Path("omegaseed-mldsa.pub")
 DIR = pathlib.Path("dist") / VERSION
 
-TARGETS = [
-    DIR / "SHA256SUMS.txt",
-    DIR / f"omegaseedphrase-offline-v{VERSION}.html",
-    DIR / f"omegaseedphrase-offline-en-v{VERSION}.html",
-]
+# Signiert wird die Pruefsummenliste und jede einzeln herunterladbare
+# HTML-Datei - nicht eine feste Liste. Ein Release muss nicht immer
+# dieselben Dateien enthalten.
+TARGETS = [DIR / "SHA256SUMS.txt"] + sorted(DIR.glob("*.html"))
 
 if not SECKEY.exists():
     sys.exit(f"Geheimer Schluessel nicht gefunden: {SECKEY}\n"

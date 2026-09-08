@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changelog — OmegaSeedphrase</title>
+<meta name="description" content="Versionsverlauf von OmegaSeedphrase mit Prüfsummen der Offline-Version.">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="assets/img/omega-icon.png">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="alternate" hreflang="de" href="https://omegaseed.io/changelog.html">
+<link rel="alternate" hreflang="en" href="https://omegaseed.io/en/changelog.html">
+<link rel="alternate" hreflang="x-default" href="https://omegaseed.io/changelog.html">
+</head>
+<body>
+
+<header>
+  <div class="wrap hbar">
+    <a class="brand" href="index.html" style="text-decoration:none;color:inherit">
+      <img src="assets/img/omega-wordmark.png" alt="Omega">
+      <span class="div"></span>
+      <span class="pn"><b>OmegaSeedphrase</b><span class="pnsub"> · Bestückung</span></span>
+    </a>
+    <nav class="main">
+      <a href="index.html">Tool</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="agb.html">Nutzungsbedingungen</a>
+      <a href="changelog.html">Changelog</a>
+    </nav>
+    <a class="langSw" href="en/changelog.html" hreflang="en" title="English version">EN</a>
+    <button class="themeBtn" onclick="toggleTheme()" title="Hell / Dunkel" aria-label="Darstellung wechseln">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <a class="vpill" href="changelog.html" title="Changelog">v1.3.0</a>
+  </div>
+</header>
+<div class="wrap"><div class="legal">
+<a class="backlink" href="index.html">← Zurück zum Tool</a>
+<h1>Changelog</h1>
+<p class="updated">VERSIONSVERLAUF · AKTUELL 1.3.0</p>
+
+<div class="box">
+  <p style="margin:0 0 8px"><b>Wie versioniert wird.</b> Das Schema ist
+  <span class="mono">HAUPT.NEBEN.KORREKTUR</span>:</p>
+  <ul style="margin:0">
+    <li><b>HAUPT</b> — die Umrechnung oder der Zeichensatz ändert sich. Eine mit einer
+      früheren Hauptversion bestückte Platte lässt sich dann nicht mehr identisch nachrechnen.
+      Solche Änderungen werden gesondert hervorgehoben.</li>
+    <li><b>NEBEN</b> — neue Funktionen oder neue Inhalte, Rechenweg unverändert.</li>
+    <li><b>KORREKTUR</b> — Fehlerbehebungen, Text- und Darstellungsänderungen.</li>
+  </ul>
+</div>
+
+<div class="box accent">
+  <p style="margin:0"><b>Prüfsumme der Offline-Datei.</b> Zu jeder veröffentlichten Version gehört
+  genau eine Offline-Datei mit einer festen SHA-256-Prüfsumme. Die aktuelle steht im
+  <a href="index.html#offline">Offline-Bereich</a> und in
+  <a href="SHA256SUMS.txt">SHA256SUMS.txt</a>. Maschinenlesbar:
+  <a href="version.json">version.json</a>.</p>
+</div>
+
+
+<div class="rel ">
+  <div class="relhead">
+    <h2 id="v1-3-0">Version 1.3.0</h2>
+    <span class="reldate">08.09.2026</span>
+    <span class="vtag ">Release</span>
+  </div>
+  <p class="reltitle">Signaturen auf der Website erklärt.</p>
+  <ul><li>Neuer Abschnitt im Offline-Bereich: wie sich eine heruntergeladene Datei gegen die veröffentlichten Signaturen prüfen lässt, mit Verweis auf die <b>Releases</b> und auf das getrennte <b>Schlüssel-Repository</b>.</li><li>Beide öffentlichen Schlüssel werden direkt von der Website ausgeliefert (<span class='mono'>omegaseed.pub</span>, <span class='mono'>omegaseed-mldsa.pub</span>), damit sie aus zwei unabhängigen Quellen verglichen werden können.</li><li>Klargestellt, dass eine Prüfsumme auf derselben Seite wie die Datei nichts beweist — erst die Signatur gegen einen andernorts veröffentlichten Schlüssel.</li><li><b>Die Offline-Dateien sind unverändert gegenüber 1.2.0.</b> Ihre Prüfsummen und Signaturen gelten weiter; wer sie bereits geprüft hat, muss nichts erneut tun.</li></ul>
+</div>
+
+<div class="rel ">
+  <div class="relhead">
+    <h2 id="v1-2-0">Version 1.2.0</h2>
+    <span class="reldate">15.08.2026</span>
+    <span class="vtag ">Release</span>
+  </div>
+  <p class="reltitle">Eine Navigation für alle Bildschirme.</p>
+  <ul><li><b>Menüführung wie auf <span class='mono'>omdp39.io</span></b>: flache Kopfleiste mit zentrierter Wortmarke, links ein runder Knopf, der das Menü als Karte aufklappt. Das gilt jetzt auf jeder Breite — die Seite hat eine Navigation statt zweier.</li><li>Im Menü stehen die Abschnitte des Tools, <b>alle Rechtsseiten</b>, die Darstellung (hell oder dunkel), die Sprachwahl und die Versionsnummer. Damit sind Impressum, Datenschutzerklärung, Nutzungsbedingungen und Changelog auch auf dem Telefon von jeder Seite aus erreichbar.</li><li>Der <b>Menüknopf hängt frei unter der Leiste am linken Bildrand</b> — wie in der Vorlage. Er liegt technisch außerhalb der Kopfzeile, weil deren Weichzeichner sonst einen eigenen Bezugsrahmen aufspannt und die feste Position wirkungslos wäre.</li><li>Der aktuelle Abschnitt wird beim Scrollen im Menü mitgeführt.</li><li>Abstände geradegezogen: Hero, Abschnitte, Fußzeile und der Menüknopf stehen auf einer Kante. Der Hero stand bisher 24 Pixel weiter links als alles darunter.</li></ul>
+</div>
+
+
+<div class="rel ">
+  <div class="relhead">
+    <h2 id="v1-1-1">Version 1.1.1</h2>
+    <span class="reldate">15.08.2026</span>
+    <span class="vtag ">Release</span>
+  </div>
+  <p class="reltitle">Mobile Ansicht überarbeitet.</p>
+  <ul><li><b>Kompakte Kopfleiste auf Telefonen</b> mit Menüknopf. Das Menü fährt als Schublade ein und enthält die Abschnitte des Tools, die Rechtsseiten, die Sprachwahl und die Versionsnummer.</li><li>Seitliches Verrutschen behoben: Prüfsumme, Befehlsbeispiele und Karten brechen jetzt um, statt die Seite breiter zu machen als das Display.</li><li>Die Tabelle in der Datenschutzerklärung wird auf schmalen Geräten zu Karten — die Spaltenbezeichnung steht über dem Wert, statt seitlich wegzulaufen.</li><li>Sprungmarken landen nicht mehr unter der Kopfleiste.</li></ul>
+</div>
+
+
+<div class="rel ">
+  <div class="relhead">
+    <h2 id="v1-1-0">Version 1.1.0</h2>
+    <span class="reldate">14.08.2026</span>
+    <span class="vtag ">Release</span>
+  </div>
+  <p class="reltitle">Dunkle Darstellung und englische Fassung.</p>
+  <ul><li><b>Dark Mode</b> ergänzt. Ein Umschalter im Seitenkopf wechselt die Darstellung; ohne eigene Wahl richtet sich die Seite nach der Systemeinstellung. Die Platte sieht in beiden Fassungen gleich aus — helles Titan mit dunklen Kanälen, so wie das Bauteil aussieht.</li><li><b>Vollständige englische Fassung</b> unter <span class='mono'>/en/</span>, einschließlich Impressum, Datenschutzerklärung, Nutzungsbedingungen und eigener Offline-Datei. Maßgeblich bleibt die deutsche Fassung.</li><li>Sprachumschalter in Kopf- und Fußzeile jeder Seite.</li><li>Datenschutzerklärung: der zweite Eintrag im lokalen Speicher (<span class='mono'>omegaseedphrase.theme</span>) ist dokumentiert.</li></ul>
+</div>
+
+
+<div class="rel ">
+  <div class="relhead">
+    <h2 id="v1-0-3">Version 1.0.3</h2>
+    <span class="reldate">14.08.2026</span>
+    <span class="vtag ">Release</span>
+  </div>
+  <p class="reltitle">Bezeichnungen geschärft.</p>
+  <ul><li>Klargestellt, dass die <b>OmegaSeedphrase ein Hardware-Produkt aus Metall</b> ist und <b>omegaseed.io</b> die dazugehörige produktbegleitende Informations- und Hilfsanwendung.</li><li>OMDP39 als technischer Standard benannt; als Referenz gilt durchgehend <span class='mono'>www.omdp39.io</span>.</li><li>Nutzungsbedingungen: Abgrenzung ergänzt, dass sie das Tool und nicht den Erwerb der Hardware regeln.</li></ul>
+</div>
+
+
+<div class="rel ">
+  <div class="relhead">
+    <h2 id="v1-0-2">Version 1.0.2</h2>
+    <span class="reldate">14.08.2026</span>
+    <span class="vtag ">Release</span>
+  </div>
+  <p class="reltitle">Angaben vervollständigt.</p>
+  <ul><li>Impressum: Kammerzugehörigkeit, Gewerbebehörde, anwendbare Rechtsvorschriften und Wirtschaftszweig nach ÖNACE 2025 ergänzt.</li><li>Unternehmensgegenstand eingetragen.</li><li>Klarstellung, dass an Verbraucherschlichtungsverfahren nicht teilgenommen wird.</li><li>Datenschutzerklärung: Angabe zum Datenschutzbeauftragten vervollständigt.</li></ul>
+</div>
+
+
+<div class="rel ">
+  <div class="relhead">
+    <h2 id="v1-0-1">Version 1.0.1</h2>
+    <span class="reldate">14.08.2026</span>
+    <span class="vtag ">Release</span>
+  </div>
+  <p class="reltitle">Schreibweisen R und Q zusammengeführt.</p>
+  <ul><li><b>R und Q bezeichnen dasselbe Zeichen</b> (Wert 23). OMDP39 schreibt dort ein <span class='mono'>R</span>, die Plättchen tragen ein <span class='mono'>Q</span>.</li><li>Codes mit <span class='mono'>R</span> werden jetzt angenommen und für die Bestückung automatisch auf <span class='mono'>Q</span> abgebildet; die Anzahl der umgesetzten Zeichen wird angezeigt.</li><li>Erklärkasten im Abschnitt Kodierung, <span class='mono'>R</span> im Alphabet gelb markiert.</li><li>Der 33-Wörter-Rechner zeigt beide Schreibweisen nebeneinander.</li><li>Ergänzende Hinweise beim Sortieren, Kennzeichnen und Verifizieren.</li></ul>
+</div>
+
+
+<div class="rel ">
+  <div class="relhead">
+    <h2 id="v1-0-0">Version 1.0.0</h2>
+    <span class="reldate">14.08.2026</span>
+    <span class="vtag ">Release</span>
+  </div>
+  <p class="reltitle">Erste öffentliche Fassung.</p>
+  <ul><li>Impressum, Datenschutzerklärung und Nutzungsbedingungen ergänzt.</li><li>Zwei Startdialoge: Hinweis zu Cookies und lokaler Speicherung, anschließend Klarstellung, dass das Werkzeug <b>keine Seedphrase erzeugt</b>.</li><li>Offline-Version als Einzeldatei mit veröffentlichter SHA-256-Prüfsumme.</li><li>Versionierung und dieser Changelog eingeführt.</li><li>Website in Einzelseiten aufgeteilt, Schriften und Wortliste als eigene Dateien.</li></ul>
+</div>
+
+</div></div>
+<footer>
+  <div class="wrap">
+    <div class="fcols">
+      <div>
+        <img src="assets/img/omega-wordmark.png" alt="Omega" style="height:24px;margin-bottom:12px">
+        <p class="tiny" style="max-width:46ch;margin:0">Die <b>OmegaSeedphrase</b> ist ein
+          Hardware-Produkt aus Metall. <b>omegaseed.io</b> ist die unentgeltliche
+          produktbegleitende Bestückungshilfe dazu. Alle Berechnungen laufen lokal im Browser.
+          Keine Cookies, kein Tracking, keine externen Ressourcen, keine Speicherung von Eingaben.</p>
+      </div>
+      <div>
+        <h5>Tool</h5>
+        <ul>
+          <li><a href="index.html#grundlagen">Grundlagen</a></li>
+          <li><a href="index.html#kodierung">Kodierung</a></li>
+          <li><a href="index.html#wizard">Anleitung</a></li>
+          <li><a href="index.html#offline">Offline-Version</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Rechtliches</h5>
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+          <li><a href="agb.html">Nutzungsbedingungen</a></li>
+          <li><a href="changelog.html">Changelog</a></li>
+          <li><a href="index.html#hinweise" onclick="showPurpose(1)">Wichtige Hinweise</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbar">
+      <span>© 2026 D&nbsp;&amp;&nbsp;M Solution Dynamics GmbH</span>
+      <span><a href="changelog.html" class="vpill">v1.3.0</a> · Stand 08.09.2026 ·
+        <a href="en/changelog.html">English</a></span>
+      <span>Keine Finanz-, Rechts- oder Steuerberatung. Nutzung auf eigene Verantwortung.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Hell / Dunkel — dieselbe Logik wie im Werkzeug. */
+const THEME_KEY = 'omegaseedphrase.theme';
+function applyTheme(t){ document.documentElement.setAttribute('data-theme', t); }
+function currentTheme(){
+  try { const v = localStorage.getItem(THEME_KEY); if(v) return v; } catch(e){}
+  return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+function toggleTheme(){
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  try { localStorage.setItem(THEME_KEY, next); } catch(e){}
+}
+applyTheme(currentTheme());
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+  let gesetzt = null;
+  try { gesetzt = localStorage.getItem(THEME_KEY); } catch(err){}
+  if(!gesetzt) applyTheme(e.matches ? 'dark' : 'light');
+});
+</script>
+<script>
+
+/* ============================================================
+   12) MENUE
+   ------------------------------------------------------------
+   Eine Navigation fuer alle Breiten. Gebaut aus dem, was auf der
+   Seite steht: Anker aus der Kopfnavigation, Rechtslinks aus dem
+   Fuss. Die Offline-Datei hat keinen Fuss — dort bleibt es bei
+   den Abschnitten, und die Sprachwahl entfaellt.
+   ============================================================ */
+(function siteMenu(){
+  var bar = document.querySelector('header .hbar');
+  if(!bar || document.getElementById('mdrawer')) return;
+
+  var lang = (document.documentElement.getAttribute('lang') || 'de').slice(0,2);
+  var EN = lang === 'en';
+  var T = EN
+    ? {open:'Open menu', close:'Close menu', nav:'Navigation', legal:'Legal',
+       set:'Settings', theme:'Appearance', light:'Light', dark:'Dark'}
+    : {open:'Men\u00fc \u00f6ffnen', close:'Men\u00fc schlie\u00dfen', nav:'Navigation',
+       legal:'Rechtliches', set:'Einstellungen', theme:'Darstellung',
+       light:'Hell', dark:'Dunkel'};
+
+  /* Zeichen statt Bilder: keine zusaetzliche Datei, skaliert mit der Schrift */
+  var ICON = {
+    grundlagen:'?', basics:'?', kodierung:'\u21dd', encoding:'\u21dd',
+    tool:'\u2302', wizard:'\u2713', inventar:'\u25c8', inventory:'\u25c8',
+    checkliste:'\u2261', checklist:'\u2261', offline:'\u2193', hinweise:'!',
+    'impressum.html':'\u00a7', 'legal-notice.html':'\u00a7',
+    'datenschutz.html':'\u25ce', 'privacy.html':'\u25ce',
+    'agb.html':'\u2261', 'terms.html':'\u2261',
+    'changelog.html':'\u21ba', 'index.html':'\u2302'
+  };
+  function iconFor(href){
+    href = href || '';
+    var hash = href.indexOf('#');
+    if(hash >= 0){
+      var k = href.slice(hash + 1);
+      if(ICON[k]) return ICON[k];
+    }
+    var file = href.split('#')[0].split('/').pop();
+    return ICON[file] || '\u00b7';
+  }
+
+  var svgOpen = '<svg class="ic-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+    + 'stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+  var svgClose = '<svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+    + 'stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
+  var burger = document.createElement('button');
+  burger.className = 'burger';
+  burger.type = 'button';
+  burger.setAttribute('aria-label', T.open);
+  burger.setAttribute('aria-expanded', 'false');
+  burger.innerHTML = svgOpen + svgClose;
+  document.body.appendChild(burger);
+
+  /* --- Linksammlung ------------------------------------------------ */
+  var navLinks = [].slice.call(document.querySelectorAll('header nav.main a'));
+  var anchors = navLinks.filter(function(a){ return (a.getAttribute('href')||'').charAt(0) === '#'; });
+  var foot = document.querySelector('footer');
+  var uls = foot ? foot.querySelectorAll('.fcols ul') : [];
+  var grp1, grp2 = [];
+
+  if(anchors.length){
+    grp1 = anchors;                                   /* Werkzeugseite */
+  } else if(uls.length){
+    grp1 = [].slice.call(uls[0].querySelectorAll('a'));
+    if(navLinks.length && (navLinks[0].getAttribute('href')||'').indexOf('index.html') === 0){
+      grp1 = [navLinks[0]].concat(grp1);              /* Rechtsseite: zurueck zum Tool */
+    }
+  } else {
+    grp1 = navLinks;
+  }
+  if(uls.length > 1) grp2 = [].slice.call(uls[uls.length - 1].querySelectorAll('a'));
+
+  /* --- Karte ------------------------------------------------------- */
+  var drawer = document.createElement('div');
+  drawer.className = 'mdrawer';
+  drawer.id = 'mdrawer';
+  drawer.innerHTML = '<div class="mbg"></div><nav class="mpanel" aria-label="' + T.nav + '"></nav>';
+  var panel = drawer.querySelector('.mpanel');
+
+  function group(label, list, sep){
+    if(!list.length) return;
+    if(sep){
+      var s = document.createElement('div');
+      s.className = 'msep';
+      panel.appendChild(s);
+    }
+    var h = document.createElement('div');
+    h.className = 'mgrp';
+    h.textContent = label;
+    panel.appendChild(h);
+    list.forEach(function(a){
+      var c = a.cloneNode(true);
+      var href = a.getAttribute('href') || '';
+      c.className = 'mlink';
+      c.innerHTML = '<span class="ic">' + iconFor(href) + '</span><span>'
+        + c.textContent.trim() + '</span>';
+      panel.appendChild(c);
+    });
+  }
+
+  group(T.nav, grp1, false);
+  group(T.legal, grp2, true);
+
+  /* --- Darstellung -------------------------------------------------- */
+  if(typeof toggleTheme === 'function'){
+    var s2 = document.createElement('div');
+    s2.className = 'msep';
+    panel.appendChild(s2);
+    var h2 = document.createElement('div');
+    h2.className = 'mgrp';
+    h2.textContent = T.set;
+    panel.appendChild(h2);
+
+    var row = document.createElement('button');
+    row.type = 'button';
+    row.className = 'mlink';
+    function paint(){
+      var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      row.innerHTML = '<span class="ic">' + (dark ? '\u263e' : '\u2600') + '</span>'
+        + '<span>' + T.theme + '</span>'
+        + '<span class="val">' + (dark ? T.dark : T.light) + '</span>';
+    }
+    paint();
+    row.addEventListener('click', function(e){
+      e.stopPropagation();
+      toggleTheme();
+      paint();
+    });
+    panel.appendChild(row);
+  }
+
+  /* --- Sprache und Version ------------------------------------------ */
+  var sw = document.querySelector('header .langSw');
+  var vp = document.querySelector('header .vpill') || document.querySelector('footer .vpill');
+  if(sw){
+    var other = (sw.textContent || '').trim().toUpperCase();
+    var foo = document.createElement('div');
+    foo.className = 'mfoot';
+    foo.innerHTML =
+      '<span class="mlang cur">' + lang.toUpperCase() + '</span>' +
+      '<a class="mlang" href="' + sw.getAttribute('href') + '" hreflang="' + other.toLowerCase()
+      + '">' + other + '</a>';
+    panel.appendChild(foo);
+  }
+  if(vp){
+    var v = document.createElement('div');
+    v.className = 'mver';
+    v.textContent = vp.textContent.trim();
+    panel.appendChild(v);
+  }
+  document.body.appendChild(drawer);
+
+  /* --- Karte unter dem Knopf ausrichten ------------------------------ */
+  function place(){
+    var r = burger.getBoundingClientRect();
+    var top = Math.round(r.bottom + 12);
+    panel.style.left = Math.round(r.left) + 'px';
+    panel.style.top = top + 'px';
+    /* Die Karte haengt am Knopf — die Hoehe muss daran haengen, sonst
+       ragt sie unten aus dem Bild. */
+    panel.style.maxHeight = Math.max(220, innerHeight - top - 16) + 'px';
+  }
+
+  /* --- Auf und zu ---------------------------------------------------- */
+  function open(on){
+    if(on) place();
+    drawer.classList.toggle('on', on);
+    burger.classList.toggle('on', on);
+    document.body.classList.toggle('mopen', on);
+    burger.setAttribute('aria-expanded', on ? 'true' : 'false');
+    burger.setAttribute('aria-label', on ? T.close : T.open);
+  }
+  burger.addEventListener('click', function(){ open(!drawer.classList.contains('on')); });
+  drawer.querySelector('.mbg').addEventListener('click', function(){ open(false); });
+  panel.addEventListener('click', function(e){
+    if(e.target.closest('a.mlink')) open(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && drawer.classList.contains('on')) open(false);
+  });
+  addEventListener('resize', function(){ if(drawer.classList.contains('on')) place(); });
+  addEventListener('scroll', function(){ if(drawer.classList.contains('on')) place(); }, {passive:true});
+
+  /* --- aktuellen Eintrag markieren ------------------------------------ */
+  var links = [].slice.call(panel.querySelectorAll('a.mlink'));
+  if(anchors.length && 'IntersectionObserver' in window){
+    var byId = {};
+    links.forEach(function(l){
+      var h = l.getAttribute('href') || '';
+      if(h.charAt(0) === '#') byId[h.slice(1)] = l;
+    });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          links.forEach(function(l){ l.classList.remove('cur'); });
+          var l = byId[en.target.id];
+          if(l) l.classList.add('cur');
+        }
+      });
+    }, {rootMargin:'-45% 0px -50% 0px'});
+    Object.keys(byId).forEach(function(id){
+      var s = document.getElementById(id);
+      if(s) io.observe(s);
+    });
+  } else {
+    var here = location.pathname.split('/').pop() || 'index.html';
+    links.forEach(function(l){
+      var h = (l.getAttribute('href') || '').split('#')[0];
+      if(h && h === here) l.classList.add('cur');
+    });
+  }
+})();
+</script>
+</body>
+</html>
