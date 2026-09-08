@@ -34,7 +34,8 @@ fi
 echo
 echo "== 2/3  Post-quantum: ML-DSA-65 (FIPS 204)"
 if [[ -f omegaseed-mldsa.pub ]]; then
-  python3 scripts/verify-pq.py "$VERSION" || FAIL=1
+  # PYTHON=... erlaubt einen eigenen Interpreter, z. B. aus einer venv.
+  "${PYTHON:-python3}" scripts/verify-pq.py "$VERSION" || FAIL=1
 else
   echo "  uebersprungen (omegaseed-mldsa.pub fehlt)"
 fi
