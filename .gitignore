@@ -1,0 +1,16 @@
+# Bauergebnisse gehoeren nicht ins Repo - sie stehen als Release unter dist/
+src/omegaseedphrase-web/
+src/omegaseedphrase-deploy/
+src/dp01-en/
+src/*.zip
+__pycache__/
+*.pyc
+
+# Geheimes Schluesselmaterial hat hier nichts verloren
+*.key
+*.seckey
+.minisign/
+.omega-secure/
+
+# Betriebssystemkram
+.DS_Store
