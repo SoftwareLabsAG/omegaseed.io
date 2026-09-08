@@ -27,7 +27,11 @@ command -v minisign >/dev/null || {
 cd "$DIR"
 
 # Alles ausser Signaturen, Pruefsummenliste und Notizen
-mapfile -t FILES < <(ls -1 | grep -Ev '\.(minisig|mldsa)$|^SHA256SUMS\.txt$|^NOTES\.md$' | sort)
+# Kein 'mapfile' - macOS liefert bash 3.2 aus, das kennt es nicht.
+FILES=()
+while IFS= read -r _f; do
+  if [ -n "$_f" ]; then FILES+=("$_f"); fi
+done < <(ls -1 | grep -Ev '\.(minisig|mldsa)$|^SHA256SUMS\.txt$|^NOTES\.md$' | sort)
 [[ ${#FILES[@]} -gt 0 ]] || { echo "In $DIR liegt nichts zu Signierendes."; exit 1; }
 
 echo "-- Diese Dateien werden erfasst:"
