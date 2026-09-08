@@ -42,6 +42,8 @@ Es sind **zwei** Signaturen über dieselben Dateien — Ed25519 und ML-DSA-65
 
 ## Eine Datei prüfen
 
+Zuerst die beiden Schlüssel besorgen (siehe unten), dann:
+
 ```bash
 bash scripts/verify.sh 1.2.0
 ```
@@ -50,13 +52,22 @@ Einzeln, ohne diese Skripte:
 
 ```bash
 minisign -Vm dist/1.2.0/SHA256SUMS.txt -p omegaseed.pub
+python3 server/mldsa-verify.py omegaseed-mldsa.pub \
+        dist/1.2.0/SHA256SUMS.txt dist/1.2.0/SHA256SUMS.txt.mldsa
 cd dist/1.2.0 && shasum -a 256 -c SHA256SUMS.txt
 ```
 
-**Holen Sie den öffentlichen Schlüssel aus zwei unabhängigen Quellen** und
-vergleichen Sie sie Zeichen für Zeichen — aus diesem Repository und von
-<https://omegaseed.io/>. Ein Schlüssel, der nur dort liegt, wo auch die Datei
-liegt, sichert nichts ab.
+### Die Schlüssel liegen bewusst nicht hier
+
+Ein öffentlicher Schlüssel im selben Repository wie die Datei, die er absichert,
+bringt wenig: Wer dieses Repository übernimmt, tauscht beides aus. Die Schlüssel
+stehen deshalb an zwei anderen Stellen:
+
+- <https://github.com/Omega-Secure/omegaseed-release>
+- <https://omegaseed.io/omegaseed.pub> und <https://omegaseed.io/omegaseed-mldsa.pub>
+
+**Holen Sie den Schlüssel aus beiden Quellen und vergleichen Sie sie Zeichen für
+Zeichen.** Erst dann ist die Prüfung etwas wert.
 
 ---
 
@@ -65,7 +76,7 @@ liegt, sichert nichts ab.
 ```
 dist/<VERSION>/     die veröffentlichten Dateien mit Signaturen
 scripts/            signieren und prüfen, klassisch und post-quantum
-omegaseed.pub       öffentlicher Ed25519-Schlüssel (minisign)
+server/             Selbstaktualisierung des Servers (prüft vor dem Umschalten)
 SIGNATUREN.md       beide Verfahren im Detail
 ```
 

@@ -1,0 +1,15 @@
+[Unit]
+Description=OmegaSeedphrase: signierte Aktualisierung pruefen und einspielen
+Documentation=https://github.com/SoftwareLabsAG/omegaseed.io
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/omega-secure/omega-update.sh
+# Der Dienst darf nur an den Webroot und sein Arbeitsverzeichnis.
+ProtectSystem=strict
+ReadWritePaths=/var/www/omegaseed.io /var/lib/omega-update
+ProtectHome=yes
+PrivateTmp=yes
+NoNewPrivileges=yes

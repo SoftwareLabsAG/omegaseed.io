@@ -1,0 +1,12 @@
+[Unit]
+Description=Stuendlich nach einer neuen signierten Version sehen
+
+[Timer]
+OnBootSec=10min
+OnUnitActiveSec=1h
+# Streut die Abfragen, damit nicht alle Server zur vollen Stunde anklopfen.
+RandomizedDelaySec=20min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
