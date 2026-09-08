@@ -46,8 +46,13 @@ if missing:
 pw = getpass.getpass("Passwort des geheimen Schluessels: ")
 try:
     sk = ser.load_pem_private_key(SECKEY.read_bytes(), password=pw.encode())
-except Exception:
-    sys.exit("Der Schluessel liess sich nicht entschluesseln — falsches Passwort?")
+except Exception as e:
+    # Nicht pauschal "falsches Passwort" behaupten - es gibt andere Ursachen,
+    # und eine falsche Diagnose kostet mehr Zeit als gar keine.
+    sys.exit(f"Der Schluessel liess sich nicht laden.\n"
+             f"  Meldung: {type(e).__name__}: {e}\n\n"
+             f"Zur Eingrenzung, ohne Passwort:\n"
+             f"    python3 scripts/diag-pq.py")
 
 pk = ser.load_pem_public_key(PUBKEY.read_bytes())
 if sk.public_key().public_bytes(

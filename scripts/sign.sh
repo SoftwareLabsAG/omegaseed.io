@@ -62,7 +62,18 @@ minisign -S -s "$SECKEY" \
   -t "OmegaSeedphrase ${VERSION} - Omega Secure, D & M Solution Dynamics GmbH" \
   -m "${SIGN[@]}"
 
-echo
-echo "-- Gegenprobe"
 cd - >/dev/null
-bash scripts/verify.sh "$VERSION"
+
+# Die Gegenprobe prueft BEIDE Verfahren. Solange die post-quantum Signatur
+# fehlt, wuerde sie zu Recht beanstanden - das ist dann kein Fehler, sondern
+# ein noch nicht erledigter Schritt. Also erst danach aufrufen.
+echo
+if ls "$DIR"/*.mldsa >/dev/null 2>&1; then
+  echo "-- Gegenprobe"
+  bash scripts/verify.sh "$VERSION"
+else
+  echo "-- Klassische Signatur liegt vor. Die post-quantum Signatur fehlt noch."
+  echo "   Als naechstes:"
+  echo "       python3 scripts/sign-pq.py ${VERSION}"
+  echo "       bash    scripts/verify.sh  ${VERSION}"
+fi
