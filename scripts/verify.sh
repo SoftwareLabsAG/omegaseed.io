@@ -42,9 +42,13 @@ fi
 
 echo
 echo "== 3/3  Pruefsummen"
+# Kommentar- und Leerzeilen herausfiltern: sha256sum kennt keine Kommentare
+# und warnt sonst ueber "improperly formatted lines".
 ( cd "$DIR"
-  if command -v sha256sum >/dev/null; then sha256sum -c SHA256SUMS.txt
-  else shasum -a 256 -c SHA256SUMS.txt; fi ) || FAIL=1
+  grep -Ev '^[[:space:]]*(#|$)' SHA256SUMS.txt > .sums.tmp
+  if command -v sha256sum >/dev/null; then sha256sum -c .sums.tmp
+  else shasum -a 256 -c .sums.tmp; fi
+  rc=$?; rm -f .sums.tmp; exit $rc ) || FAIL=1
 
 echo
 if [[ $FAIL -eq 0 ]]; then

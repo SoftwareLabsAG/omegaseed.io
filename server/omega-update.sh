@@ -111,7 +111,8 @@ SITE="$TMP/x/omegaseedphrase-deploy/omegaseedphrase-web"
 [[ -f "$SITE/version.json" ]] || fail "version.json fehlt im Paket"
 INNER="$("$PYTHON" -c 'import json,sys;print(json.load(open(sys.argv[1]))["version"])' "$SITE/version.json")"
 [[ "$INNER" == "$VERSION" ]] || fail "Paket sagt Version $INNER, Release sagt $VERSION"
-( cd "$SITE" && sha256sum -c --quiet SHA256SUMS.txt ) || fail "Dateien im Paket weichen ab"
+( cd "$SITE" && grep -Ev '^[[:space:]]*(#|$)' SHA256SUMS.txt \
+    | sha256sum -c --quiet - ) || fail "Dateien im Paket weichen ab"
 log "Paketinhalt geprueft (Version $INNER)"
 
 if [[ $DRY -eq 1 ]]; then
