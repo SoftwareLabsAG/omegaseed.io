@@ -1,7 +1,7 @@
 {
   "name": "OmegaSeedphrase",
-  "version": "1.3.0",
-  "released": "2026-09-08",
+  "version": "1.3.1",
+  "released": "2026-09-09",
   "offline_file": "download/omegaseedphrase-offline.html",
   "offline_sha256": "67bfafd9266143d084e7dc329585604abef974b87ad60cbf78c8a7415611f812",
   "changelog": "changelog.html",

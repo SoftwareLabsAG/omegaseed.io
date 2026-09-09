@@ -1,6 +1,6 @@
 # OmegaSeedphrase — Produktionspaket
 
-**Version 1.3.0 · 08.09.2026 · omegaseed.io**
+**Version 1.3.1 · 09.09.2026 · omegaseed.io**
 
 Statische Website, kein Backend, keine Build-Kette. Ordner auf den Webserver legen, fertig.
 

@@ -95,7 +95,7 @@
         <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
     </button>
     <a class="langSw" href="../index.html" hreflang="de" title="Deutsche Fassung">DE</a>
-    <a class="vpill" href="changelog.html" title="Changelog">v1.3.0</a>
+    <a class="vpill" href="changelog.html" title="Changelog">v1.3.1</a>
   </div>
 </header>
 
@@ -440,6 +440,60 @@ openssl pkeyutl -verify -rawin -in SHA256SUMS.txt \
     -pubin -inkey omegaseed-mldsa.pub -sigfile SHA256SUMS.txt.mldsa
 sha256sum -c SHA256SUMS.txt</div>
 
+      <h4 style="margin:24px 0 8px;font-size:15px">The signatures in plain text</h4>
+      <p class="small mut">So you can see what you are checking against without downloading
+        anything first, the values are printed here. They belong to the offline file of version 1.2.0 —
+        unchanged since then, and so are its signatures.</p>
+
+      <p class="small mut" style="margin:16px 0 4px"><b class="mono">omegaseedphrase-offline-v1.2.0.html</b> · German</p>
+      <div class="chainBox cmd">SHA-256 of the file
+67bfafd9266143d084e7dc329585604abef974b87ad60cbf78c8a7415611f812
+
+Ed25519 · contents of omegaseedphrase-offline-v1.2.0.html.minisig
+untrusted comment: Omega Secure - OmegaSeedphrase 1.2.0
+RUT6P3576aEuE5ibnh1F+rdI0vTJGhIQF5WFH+6uOSUKxll7CYUa4OVTM4/dJTU7+dYLqXeTFIov3qtKaX90xBRbFhngUEwvYgE=
+trusted comment: OmegaSeedphrase 1.2.0 - Omega Secure, D &amp; M Solution Dynamics GmbH
+iekah8FAKbJSQwvvPmeou7jiH/0AnCfkpXxF2zgKJsXJ9/BINs19OVSg10DUDnYAKQ7JVCHH8qF41Ao1D205Bg==
+
+ML-DSA-65 · omegaseedphrase-offline-v1.2.0.html.mldsa (3309 bytes) — SHA-256 of the signature file
+24014f63d3a12e415450338a0ad909a2800e4fa375597aa7970a814c83a4bbf7</div>
+
+      <p class="small mut" style="margin:16px 0 4px"><b class="mono">omegaseedphrase-offline-en-v1.2.0.html</b> · English</p>
+      <div class="chainBox cmd">SHA-256 of the file
+5b198e2cf7d8b59c4c0867327d805627ddd84bb99649e7365c1f4f2f6253666a
+
+Ed25519 · contents of omegaseedphrase-offline-en-v1.2.0.html.minisig
+untrusted comment: Omega Secure - OmegaSeedphrase 1.2.0
+RUT6P3576aEuE41KjBjagAK7GJcxgVnJu2vB0SfTMfjZZUeG+EesOZFrV5+nifyGCxKitRh1P2XhWgoTav6OULM9vkvFMGOKfA0=
+trusted comment: OmegaSeedphrase 1.2.0 - Omega Secure, D &amp; M Solution Dynamics GmbH
+YG9ijPLD7M8C1Qad/gC9NFWQtl9OXdDqRGM4trvhxsmgI6KLul4JvKCwYmw6vLDSlIx7Q/rvGYCRARFXgRGbAw==
+
+ML-DSA-65 · omegaseedphrase-offline-en-v1.2.0.html.mldsa (3309 bytes) — SHA-256 of the signature file
+e6919c9c2f544195c841ac76592d61bd60807244b8f9a0ba376b56b063ed7afc</div>
+
+      <p class="small mut" style="margin:16px 0 4px"><b>The public keys</b></p>
+      <div class="chainBox cmd">untrusted comment: minisign public key 132EA1E97B7E3FFA
+RWT6P3576aEuE1ra298mwiDlorcDw2QrdFHF/hQ7oSrgOCnSyT1zXzxe
+
+SHA-256 of the file omegaseed.pub
+dbde36414b46429727340945a919d6243ade46ec7c7110a2de0d4470d4a0102e
+
+SHA-256 of the file omegaseed-mldsa.pub
+54a23f74582d4d2bbe02fd31c82ed3cb3e3627e024e456d9bb2d991b2f610234</div>
+
+      <div class="row" style="margin:14px 0">
+        <a class="btn primary" href="https://github.com/SoftwareLabsAG/omegaseed.io/releases/tag/v1.2.0" target="_blank" rel="noopener noreferrer">Release v1.2.0 on GitHub</a>
+        <a class="btn" href="https://github.com/SoftwareLabsAG/omegaseed.io/releases/download/v1.2.0/omegaseedphrase-offline-v1.2.0.html.minisig">German .minisig</a>
+        <a class="btn" href="https://github.com/SoftwareLabsAG/omegaseed.io/releases/download/v1.2.0/omegaseedphrase-offline-v1.2.0.html.mldsa">German .mldsa</a>
+        <a class="btn" href="https://github.com/SoftwareLabsAG/omegaseed.io/releases/download/v1.2.0/omegaseedphrase-offline-en-v1.2.0.html.minisig">English .minisig</a>
+        <a class="btn" href="https://github.com/SoftwareLabsAG/omegaseed.io/releases/download/v1.2.0/omegaseedphrase-offline-en-v1.2.0.html.mldsa">English .mldsa</a>
+      </div>
+      <p class="tiny mut" style="margin-top:12px">The ML-DSA key was replaced on 09.09.2026
+        because its password was no longer available, and the version 1.2.0 signatures were re-created
+        with the new key. The files themselves were left untouched — provable from the Ed25519
+        signatures above, which come from the original publication and were not changed. The previous
+        public key is kept under <span class="mono">keys/retired/</span> in the project repository.</p>
+
       <div class="note warn" style="margin-top:14px">
         <b>Get the key from two sources and compare them.</b> Once from this website, once from the
         key repository. A key that only sits where the file sits secures nothing — which is exactly
@@ -481,7 +535,7 @@ sha256sum -c SHA256SUMS.txt</div>
     </div>
     <div class="fbar">
       <span>© 2026 D&nbsp;&amp;&nbsp;M Solution Dynamics GmbH</span>
-      <span><a href="changelog.html" class="vpill">v1.3.0</a> · 08.09.2026 ·
+      <span><a href="changelog.html" class="vpill">v1.3.1</a> · 09.09.2026 ·
         <a href="../index.html">Deutsch</a></span>
       <span>No financial, legal or tax advice. Use at your own responsibility.</span>
     </div>
