@@ -1,0 +1,4 @@
+# OmegaSeedphrase 1.3.0
+# Pruefen:  minisign -Vm SHA256SUMS.txt -p omegaseed.pub  &&  sha256sum -c SHA256SUMS.txt
+
+112b51fce0194c784287ba31accd6557aaa8270348b641619b1e06d748b8ed2f  omegaseedphrase-deploy-v1.3.0.zip
