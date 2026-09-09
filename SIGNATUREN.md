@@ -77,6 +77,42 @@ minisign -G -s ~/.omega-secure/omegaseed.key -p omegaseed.pub  # Ed25519
 Beide geheimen Schluessel liegen danach in `~/.omega-secure/` und bleiben dort.
 Verschluesselte Sicherung anlegen, Passwoerter getrennt davon aufbewahren.
 
+## Zwei Repositories
+
+Paket und Signatur werden getrennt veroeffentlicht:
+
+| | Repository | Inhalt |
+|---|---|---|
+| Paket | `SoftwareLabsAG/omegaseed.io` | nur `omegaseedphrase-deploy-v<VERSION>.zip` |
+| Signaturen | `Omega-Secure/omegaseed-release` | `SHA256SUMS.txt`, alle `.minisig` und `.mldsa`, dazu die oeffentlichen Schluessel |
+
+Pruefmaterial soll nicht dort liegen, wo auch das Geprueft liegt. Zusaetzlichen
+Schutz gegen Faelschungen bringt das nicht - wer eines der Repositories
+uebernimmt, kann ohnehin nichts unterschieben, weil ihm die geheimen
+Schluessel fehlen. Der Gewinn liegt in der Nachvollziehbarkeit und darin, dass
+zwei getrennt verwaltete Stellen zusammenpassen muessen.
+
+**Die Signaturseite sagt, welche Version die neueste ist.** `omega-update.sh`
+fragt `Omega-Secure/omegaseed-release` nach dem letzten Release und holt das
+Paket unter demselben Tag aus dem Projekt-Repository.
+
+### Veroeffentlichen
+
+```bash
+bash scripts/publish.sh 1.3.1
+```
+
+Das Skript prueft zuerst selbst und veroeffentlicht nichts Unsigniertes. Es
+haelt die Reihenfolge ein: **erst das Paket, dann die Signaturen.** Andersherum
+sieht der Server einen Tag, zu dem es noch kein Paket gibt, und bricht ab.
+
+Aeltere Versionen nachtragen - `--backfill` sorgt dafuer, dass sie nicht als
+neueste gelten und der Server nicht zurueckfaellt:
+
+```bash
+bash scripts/publish.sh --backfill 1.2.0
+```
+
 ## Schluesselwechsel
 
 Ein Schluessel wird gewechselt, wenn er kompromittiert sein koennte oder wenn

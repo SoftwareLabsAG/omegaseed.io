@@ -82,6 +82,9 @@ Kein Schlüssel und kein Serverzugang liegt dabei bei GitHub.
 
 ## Was der Server prüft, bevor er umschaltet
 
+0. Welche Version die neueste ist, sagt das Signatur-Repository
+   `Omega-Secure/omegaseed-release`; das Paket kommt unter demselben Tag aus
+   `SoftwareLabsAG/omegaseed.io`
 1. Ed25519-Signatur über `SHA256SUMS.txt` gegen `/etc/omega-secure/omegaseed.pub`
 2. ML-DSA-65-Signatur über dieselbe Datei gegen `omegaseed-mldsa.pub`
 3. Prüfsumme des Pakets gegen die signierte Liste

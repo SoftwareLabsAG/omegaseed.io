@@ -426,11 +426,16 @@
         Ed25519 no longer withstands a quantum computer — and a seed phrase backup is meant to last
         decades. A forgery would have to pass both.</p>
 
+      <p class="small mut">Package and signature are <b>published separately</b>: the delivery
+        package under <span class="mono">SoftwareLabsAG</span>, the checksum list and both
+        signatures under <span class="mono">Omega-Secure</span>. Verification material should not
+        sit where the verified thing sits.</p>
+
       <div class="row" style="margin:14px 0">
         <a class="btn primary" href="https://github.com/SoftwareLabsAG/omegaseed.io/releases"
-           target="_blank" rel="noopener noreferrer">Releases and signatures</a>
+           target="_blank" rel="noopener noreferrer">Package releases</a>
         <a class="btn" href="https://github.com/Omega-Secure/omegaseed-release"
-           target="_blank" rel="noopener noreferrer">Public keys</a>
+           target="_blank" rel="noopener noreferrer">Signatures and keys</a>
         <a class="btn" href="../omegaseed.pub">omegaseed.pub</a>
         <a class="btn" href="../omegaseed-mldsa.pub">omegaseed-mldsa.pub</a>
       </div>
@@ -482,11 +487,11 @@ SHA-256 of the file omegaseed-mldsa.pub
 54a23f74582d4d2bbe02fd31c82ed3cb3e3627e024e456d9bb2d991b2f610234</div>
 
       <div class="row" style="margin:14px 0">
-        <a class="btn primary" href="https://github.com/SoftwareLabsAG/omegaseed.io/releases/tag/v1.2.0" target="_blank" rel="noopener noreferrer">Release v1.2.0 on GitHub</a>
-        <a class="btn" href="https://github.com/SoftwareLabsAG/omegaseed.io/releases/download/v1.2.0/omegaseedphrase-offline-v1.2.0.html.minisig">German .minisig</a>
-        <a class="btn" href="https://github.com/SoftwareLabsAG/omegaseed.io/releases/download/v1.2.0/omegaseedphrase-offline-v1.2.0.html.mldsa">German .mldsa</a>
-        <a class="btn" href="https://github.com/SoftwareLabsAG/omegaseed.io/releases/download/v1.2.0/omegaseedphrase-offline-en-v1.2.0.html.minisig">English .minisig</a>
-        <a class="btn" href="https://github.com/SoftwareLabsAG/omegaseed.io/releases/download/v1.2.0/omegaseedphrase-offline-en-v1.2.0.html.mldsa">English .mldsa</a>
+        <a class="btn primary" href="https://github.com/Omega-Secure/omegaseed-release/releases/tag/v1.2.0" target="_blank" rel="noopener noreferrer">Signatures v1.2.0</a>
+        <a class="btn" href="https://github.com/Omega-Secure/omegaseed-release/releases/download/v1.2.0/omegaseedphrase-offline-v1.2.0.html.minisig">German .minisig</a>
+        <a class="btn" href="https://github.com/Omega-Secure/omegaseed-release/releases/download/v1.2.0/omegaseedphrase-offline-v1.2.0.html.mldsa">German .mldsa</a>
+        <a class="btn" href="https://github.com/Omega-Secure/omegaseed-release/releases/download/v1.2.0/omegaseedphrase-offline-en-v1.2.0.html.minisig">English .minisig</a>
+        <a class="btn" href="https://github.com/Omega-Secure/omegaseed-release/releases/download/v1.2.0/omegaseedphrase-offline-en-v1.2.0.html.mldsa">English .mldsa</a>
       </div>
       <p class="tiny mut" style="margin-top:12px">The ML-DSA key was replaced on 09.09.2026
         because its password was no longer available, and the version 1.2.0 signatures were re-created
