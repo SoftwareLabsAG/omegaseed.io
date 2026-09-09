@@ -76,3 +76,58 @@ minisign -G -s ~/.omega-secure/omegaseed.key -p omegaseed.pub  # Ed25519
 
 Beide geheimen Schluessel liegen danach in `~/.omega-secure/` und bleiben dort.
 Verschluesselte Sicherung anlegen, Passwoerter getrennt davon aufbewahren.
+
+## Schluesselwechsel
+
+Ein Schluessel wird gewechselt, wenn er kompromittiert sein koennte oder wenn
+er nicht mehr benutzbar ist. Der zweite Fall ist am 09.09.2026 eingetreten: das
+Passwort des ML-DSA-Schluessels war nicht mehr verfuegbar. Der Schluessel war
+damit nicht gestohlen, aber unbrauchbar - signieren ging nicht mehr.
+
+Der Ed25519-Schluessel war davon nicht betroffen und wurde nicht gewechselt.
+
+### Ablauf
+
+```bash
+python3 scripts/keygen-pq.py --rotate      # netzgetrennt
+python3 scripts/sign-pq.py 1.2.0           # Altbestand nachsignieren
+python3 scripts/sign-pq.py 1.3.0
+bash    scripts/verify.sh  1.2.0
+bash    scripts/verify.sh  1.3.0
+```
+
+`--rotate` loescht den alten geheimen Schluessel nicht, sondern verschiebt ihn
+nach `~/.omega-secure/retired/`, und legt den alten oeffentlichen Schluessel
+unter `keys/retired/` ab. Anschliessend prueft das Skript selbst, ob sich der
+neue Schluessel von der Platte mit dem Passwort oeffnen laesst, ob er zum
+geschriebenen oeffentlichen Schluessel gehoert und ob eine Testsignatur
+verifiziert - erst dann meldet es Erfolg.
+
+### Was danach noch getauscht werden muss
+
+Der neue oeffentliche Schluessel muss an **allen** Stellen liegen, sonst
+schlaegt entweder die Pruefung durch Dritte oder das automatische Update fehl:
+
+1. dieses Repository (`omegaseed-mldsa.pub`)
+2. `Omega-Secure/omegaseed-release`
+3. `https://omegaseed.io/omegaseed-mldsa.pub` (im Webroot, nicht im Paket)
+4. `/etc/omega-secure/omegaseed-mldsa.pub` auf dem Server
+
+Punkt 4 zuerst, sonst verweigert der Server das naechste Update - was richtig
+waere, aber unnoetig Verwirrung stiftet. Der SHA-256 des Schluessels, den
+`keygen-pq.py` ausgibt, ist der Wert, gegen den Sie alle vier Stellen halten.
+
+### Zum Nachsignieren des Altbestands
+
+`sign-pq.py` fasst `SHA256SUMS.txt` und die `.minisig` nicht an, sondern
+schreibt nur die `.mldsa` neu. Die Auslieferungsdateien bleiben byteidentisch,
+ihre veroeffentlichten Pruefsummen bleiben gueltig, und die Ed25519-Signaturen
+aus der urspruenglichen Veroeffentlichung bleiben unveraendert. Genau die sind
+der unabhaengige Beleg dafuer, dass beim Nachsignieren an den Dateien nichts
+geaendert wurde.
+
+Die ersetzten Signaturen kommen mit `--clobber` in das bestehende Release:
+
+```bash
+gh release upload v1.2.0 dist/1.2.0/*.mldsa --clobber
+```
